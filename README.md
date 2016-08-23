@@ -1,0 +1,1 @@
+Angular Application using Ruby on Rails as a server and Google Maps API for tourists in DC who are looking to experience the city like a local. This app will show the city's hidden gems instead of more popular events, restaurants and open areas.
