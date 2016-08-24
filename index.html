@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="js/hiddngems/script.js"></script>
+</head>
+<body>
+
+  <div id="wrapper">
+    <div class="overlay"></div>
+
+    <!-- Sidebar -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+      <ul class="nav sidebar-nav">
+        <li class="sidebar-brand">
+          <a href="#">
+            <img class="menu-logo" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/logo%20white-01.png?raw=true">               </a>
+          </li>
+          <li>
+            <a href="#">Home</a>
+          </li>
+          <li>
+            <a href="#">About</a>
+          </li>
+          <li>
+            <a data-toggle="modal" data-target="#myModal" href="#" class="team">Team</a>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li class="dropdown-header">Cities</li>
+              <li><a href="#places">Washington DC</a></li>
+              <!-- <li><a href="#">Philadelphia</a></li>
+              <li><a href="#">Los Angeles</a></li> -->
+            </ul>
+          </li>
+          <!-- <li>
+            <a href="#">Services</a>
+          </li>
+          <li>
+            <a href="#">Contact</a>
+          </li> -->
+        </ul>
+      </nav>
+      <!-- /#sidebar-wrapper -->
+
+      <!-- <button type="button" class="hamburger is-open" data-toggle="offcanvas">
+                <span class="hamb-top"></span>
+                <span class="hamb-middle"></span>
+                <span class="hamb-bottom"></span>
+              </button> -->
+
+      <!-- Page Content -->
+      <div id="page-content-wrapper">
+        <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
+          <span class="hamb-top"></span>
+          <span class="hamb-middle"></span>
+          <span class="hamb-bottom"></span>
+        </button>
+      </div>
+
+      <div class="jumbotron">
+        <img src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/logo%20white-01.png?raw=true" class="logo" alt="" />
+      </div>
+
+      <div class="container-fluid featured">
+        <div class="row">
+          <div class="col-md-7">
+            <img id="featured" src="http://dummyimage.com/600x400">
+          </div>
+          <div class="col-md-5">
+            <h1>Featured Place</h1>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porta ligula nisl, vitae pellentesque ipsum congue quis. Nullam non diam ex. Nunc eu eros a libero molestie rutrum vel vitae dolor. Cras mollis viverra mi, id ultricies augue commodo rutrum. Cras vel ante lacinia, venenatis felis id, pellentesque ipsum. In pulvinar quis nisl bibendum facilisis. Sed ornare volutpat turpis id tincidunt. Suspendisse mi nulla, eleifend quis eros quis, vulputate varius lorem. Sed euismod est vitae tortor congue fermentum.</p>
+          </div>
+
+        </div>
+      </div>
+      <div class="container-fluid black" id="places">
+        <div class="row">
+          <div class="col-md-4">
+            <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
+            <h3>Place Name</h3>
+            <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+          </div>
+          <div class="col-md-4">
+            <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
+            <h3>Place Name</h3>
+            <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+          </div>
+          <div class="col-md-4">
+            <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
+            <h3>Place Name</h3>
+            <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+          </div>
+        </div>
+      </div>
+
+    <div class="container">
+  <!-- <h2>Modal Example</h2>
+   Trigger the modal with a button
+  <a data-toggle="modal" data-target="#myModal">Open Modal</a> -->
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <!--
+        CAROUSEL
+        -->
+        <div class="container-fluid bio">
+        <br>
+        <div id="myCarousel" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#myCarousel" data-slide-to="1"></li>
+            <li data-target="#myCarousel" data-slide-to="2"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <div class="row">
+                <div class="col-md-12">
+                  <img class="img-circle profile-pic" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/ProfilePic.jpg?raw=true" alt="Rasheeda Headshot">
+                </div>
+                <div class="col-md-12">
+                  <h2>Rasheeda</h2>
+                  <p>Bio stuff goes here. Blah blah blah blah blah blah blah blah blah blah blah.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <div class="col-md-12">
+                  <img class="img-circle profile-pic" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/13988107_10210530456634660_1759831132897361046_o.jpg?raw=true" alt="Parnell Headshot">
+                </div>
+                <div class="col-md-12">
+                  <h2>Parnell</h2>
+                  <p>Bio stuff goes here. Blah blah blah blah blah blah blah blah blah blah blah.</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="item">
+              <div class="row">
+                <div class="col-md-12">
+                  <img class="img-circle profile-pic" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/WDI11_07192016_165WDI10_07192016_165.jpg?raw=true" alt="Gio Headshot">
+                </div>
+                <div class="col-md-12">
+                  <h2>Gio</h2>
+                  <p>Bio stuff goes here. Blah blah blah blah blah blah blah blah blah blah blah.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Left and right controls -->
+          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+        </div>
+        <!--
+        END CAROUSEL -->
+
+
+        <!-- <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+
+        <div class="modal-footer">
+          <a data-dismiss="modal">Close</a>
+        </div>
+      -->
+      </div>
+    </div>
+  </div>
+</div>
+
+  </body>
+  </html>
