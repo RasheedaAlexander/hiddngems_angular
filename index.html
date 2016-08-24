@@ -1,202 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Angular Google Places Search</title>
+    <!-- ******************LINK SCRIPT FILES**************** -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.8/angular.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_ykke8k-NmTkYRjQ-tTy0nuR33SAPPcU&libraries=places"></script>
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+    <script src="https://cdn.firebase.com/libs/angularfire/2.0.0/angularfire.min.js"></script>
+    <script src="app.js"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
-  <script src="js/hiddngems/script.js"></script>
-</head>
-<body>
+    <!-- ******************LINK FIREBASE**************** -->
 
-  <div id="wrapper">
-    <div class="overlay"></div>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAtMrSakSaTXNdn-7_MamFHbfwzbjQ5_7c",
+        authDomain: "hiddngems-4d196.firebaseapp.com",
+        databaseURL: "https://hiddngems-4d196.firebaseio.com",
+        storageBucket: "hiddngems-4d196.appspot.com",
+      };
+      firebase.initializeApp(config);
+    </script>
 
-    <!-- Sidebar -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
-      <ul class="nav sidebar-nav">
-        <li class="sidebar-brand">
-          <a href="#">
-            <img class="menu-logo" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/logo%20white-01.png?raw=true">               </a>
-          </li>
-          <li>
-            <a href="#">Home</a>
-          </li>
-          <li>
-            <a href="#">About</a>
-          </li>
-          <li>
-            <a data-toggle="modal" data-target="#myModal" href="#" class="team">Team</a>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li class="dropdown-header">Cities</li>
-              <li><a href="#places">Washington DC</a></li>
-              <!-- <li><a href="#">Philadelphia</a></li>
-              <li><a href="#">Los Angeles</a></li> -->
-            </ul>
-          </li>
-          <!-- <li>
-            <a href="#">Services</a>
-          </li>
-          <li>
-            <a href="#">Contact</a>
-          </li> -->
-        </ul>
-      </nav>
-      <!-- /#sidebar-wrapper -->
+    <!-- ******************LINK STYLE FILES**************** -->
 
-      <!-- <button type="button" class="hamburger is-open" data-toggle="offcanvas">
-                <span class="hamb-top"></span>
-                <span class="hamb-middle"></span>
-                <span class="hamb-bottom"></span>
-              </button> -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    h3 img {
+    max-height: 50px;
+    }
+    #map {
+    height: 400px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border: 1px solid silver;
+    }
+    </style>
 
-      <!-- Page Content -->
-      <div id="page-content-wrapper">
-        <button type="button" class="hamburger is-closed" data-toggle="offcanvas">
-          <span class="hamb-top"></span>
-          <span class="hamb-middle"></span>
-          <span class="hamb-bottom"></span>
-        </button>
-      </div>
+  </head>
+  <body>
+    <div class="container" ng-app="myApp" ng-controller="newPlaceCtrl">
 
-      <div class="jumbotron">
-        <img src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/logo%20white-01.png?raw=true" class="logo" alt="" />
-      </div>
+      <form name="searchForm" novalidate
+      ng-submit="search()">
+          <div class="input-group">
+              <input name="place" type="text" class="form-control"
+              ng-model="searchPlace" required autofocus />
 
-      <div class="container-fluid featured">
-        <div class="row">
-          <div class="col-md-7">
-            <img id="featured" src="http://dummyimage.com/600x400">
+              <span class="input-group-btn">
+                  <button class="btn btn-primary"
+                  ng-disabled="searchForm.$invalid">Search</button>
+              </span>
+
           </div>
-          <div class="col-md-5">
-            <h1>Featured Place</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum porta ligula nisl, vitae pellentesque ipsum congue quis. Nullam non diam ex. Nunc eu eros a libero molestie rutrum vel vitae dolor. Cras mollis viverra mi, id ultricies augue commodo rutrum. Cras vel ante lacinia, venenatis felis id, pellentesque ipsum. In pulvinar quis nisl bibendum facilisis. Sed ornare volutpat turpis id tincidunt. Suspendisse mi nulla, eleifend quis eros quis, vulputate varius lorem. Sed euismod est vitae tortor congue fermentum.</p>
-          </div>
+      </form>
 
-        </div>
-      </div>
-      <div class="container-fluid black" id="places">
-        <div class="row">
-          <div class="col-md-4">
-            <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
-            <h3>Place Name</h3>
-            <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
-          </div>
-          <div class="col-md-4">
-            <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
-            <h3>Place Name</h3>
-            <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
-          </div>
-          <div class="col-md-4">
-            <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
-            <h3>Place Name</h3>
-            <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
-          </div>
-        </div>
-      </div>
+      <div id="map"></div>
 
-    <div class="container">
-  <!-- <h2>Modal Example</h2>
-   Trigger the modal with a button
-  <a data-toggle="modal" data-target="#myModal">Open Modal</a> -->
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-
-      <!-- Modal content-->
-      <div class="modal-content">
-        <!--
-        CAROUSEL
-        -->
-        <div class="container-fluid bio">
-        <br>
-        <div id="myCarousel" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-            <li data-target="#myCarousel" data-slide-to="1"></li>
-            <li data-target="#myCarousel" data-slide-to="2"></li>
-          </ol>
-
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
-            <div class="item active">
-              <div class="row">
-                <div class="col-md-12">
-                  <img class="img-circle profile-pic" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/ProfilePic.jpg?raw=true" alt="Rasheeda Headshot">
-                </div>
-                <div class="col-md-12">
-                  <h2>Rasheeda</h2>
-                  <p>Bio stuff goes here. Blah blah blah blah blah blah blah blah blah blah blah.</p>
-                </div>
+      <form name="resForm" class="form-horizontal" novalidate
+      ng-submit="send()">
+          <div class="form-group">
+              <label for="resName" class="col-xs-2 control-label">Name</label>
+              <div class="col-xs-10">
+                  <input name="resName" type="text" class="form-control"
+                  ng-model="place.name" required />
               </div>
-            </div>
-
-            <div class="item">
-              <div class="row">
-                <div class="col-md-12">
-                  <img class="img-circle profile-pic" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/13988107_10210530456634660_1759831132897361046_o.jpg?raw=true" alt="Parnell Headshot">
-                </div>
-                <div class="col-md-12">
-                  <h2>Parnell</h2>
-                  <p>Bio stuff goes here. Blah blah blah blah blah blah blah blah blah blah blah.</p>
-                </div>
-              </div>
-            </div>
-
-            <div class="item">
-              <div class="row">
-                <div class="col-md-12">
-                  <img class="img-circle profile-pic" src="https://github.com/mrnelley/HiddenGems/blob/master/Planning/WDI11_07192016_165WDI10_07192016_165.jpg?raw=true" alt="Gio Headshot">
-                </div>
-                <div class="col-md-12">
-                  <h2>Gio</h2>
-                  <p>Bio stuff goes here. Blah blah blah blah blah blah blah blah blah blah blah.</p>
-                </div>
-              </div>
-            </div>
           </div>
 
-          <!-- Left and right controls -->
-          <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-        </div>
-        <!--
-        END CAROUSEL -->
+          <div class="form-group">
+              <label for="resAddress" class="col-xs-2 control-label">Address</label>
+              <div class="col-xs-10">
+                  <input name="resAddress" type="text" class="form-control"
+                  ng-model="place.address" required />
+              </div>
+          </div>
 
+          <div class="form-group">
+              <label for="resLat" class="col-xs-2 control-label">Latitude</label>
+              <div class="col-xs-10">
+                  <input name="resLat" type="number" class="form-control"
+                  ng-model="place.lat" required />
+              </div>
+          </div>
 
-        <!-- <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
+          <div class="form-group">
+              <label for="resLng" class="col-xs-2 control-label">Longitude</label>
+              <div class="col-xs-10">
+                  <input name="resLng" type="number" class="form-control"
+                  ng-model="place.lng" required />
+              </div>
+          </div>
 
-        <div class="modal-footer">
-          <a data-dismiss="modal">Close</a>
-        </div>
-      -->
-      </div>
+          <div class="form-group">
+              <div class="col-xs-offset-2 col-xs-10">
+                  <button class="btn btn-success"
+                  ng-disabled="resForm.$invalid">Confirm</button>
+              </div>
+          </div>
+
+      </form>
+
     </div>
-  </div>
-</div>
-
   </body>
-  </html>
+</html>
