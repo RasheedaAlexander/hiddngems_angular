@@ -7,10 +7,43 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <link rel="stylesheet" href="style.css">
 
+  <style>
+  h3 img {
+    max-height: 50px;
+  }
+  #map {
+    height: 400px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border: 1px solid silver;
+  }
+  </style>
+
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB_ykke8k-NmTkYRjQ-tTy0nuR33SAPPcU&libraries=places"></script>
+  <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+  <script src="https://cdn.firebase.com/libs/angularfire/2.0.0/angularfire.min.js"></script>
   <script src="js/hiddngems/script.js"></script>
+  <script src="js/app.js"></script>
+
+
+  <!-- ******************LINK FIREBASE**************** -->
+
+  <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAtMrSakSaTXNdn-7_MamFHbfwzbjQ5_7c",
+    authDomain: "hiddngems-4d196.firebaseapp.com",
+    databaseURL: "https://hiddngems-4d196.firebaseio.com",
+    storageBucket: "hiddngems-4d196.appspot.com",
+  };
+  firebase.initializeApp(config);
+  </script>
+
+  <!-- ******************LINK STYLE FILES**************** -->
+
 </head>
 <body>
 
@@ -28,34 +61,34 @@
             <a href="#">Home</a>
           </li>
           <!-- <li>
-            <a data-toggle="modal" data-target="#myAboutModal" href="#" class="about">About</a>
-          </li> -->
-          <li>
-            <a data-toggle="modal" data-target="#myModal" href="#" class="team">Team</a>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li class="dropdown-header">Cities</li>
-              <li><a href="#places">Washington DC</a></li>
-              <!-- <li><a href="#">Philadelphia</a></li>
-              <li><a href="#">Los Angeles</a></li> -->
-            </ul>
-          </li>
-          <!-- <li>
-          <a href="#">Services</a>
-        </li>
+          <a data-toggle="modal" data-target="#myAboutModal" href="#" class="about">About</a>
+        </li> -->
         <li>
-        <a href="#">Contact</a>
-      </li> -->
-    </ul>
-  </nav>
-  <!-- /#sidebar-wrapper -->
+          <a data-toggle="modal" data-target="#myModal" href="#" class="team">Team</a>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Locations <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li class="dropdown-header">Cities</li>
+            <li><a href="#places">Washington DC</a></li>
+            <!-- <li><a href="#">Philadelphia</a></li>
+            <li><a href="#">Los Angeles</a></li> -->
+          </ul>
+        </li>
+        <!-- <li>
+        <a href="#">Services</a>
+      </li>
+      <li>
+      <a href="#">Contact</a>
+    </li> -->
+  </ul>
+</nav>
+<!-- /#sidebar-wrapper -->
 
-  <!-- <button type="button" class="hamburger is-open" data-toggle="offcanvas">
-  <span class="hamb-top"></span>
-  <span class="hamb-middle"></span>
-  <span class="hamb-bottom"></span>
+<!-- <button type="button" class="hamburger is-open" data-toggle="offcanvas">
+<span class="hamb-top"></span>
+<span class="hamb-middle"></span>
+<span class="hamb-bottom"></span>
 </button> -->
 
 <!-- Page Content -->
@@ -83,25 +116,90 @@
 
   </div>
 </div>
-<div class="container-fluid black" id="places">
-  <div class="row">
-    <div class="col-md-4">
-      <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
-      <h1><a class="website" href="#">Place Name</a></h1>
-      <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+<!--Google Map -->
+<div class="container-fluid black" id="places" ng-app="myApp" ng-controller="newPlaceCtrl">
+
+  <form name="searchForm" novalidate
+  ng-submit="search()">
+  <div class="input-group">
+    <input name="place" type="text" class="form-control"
+    ng-model="searchPlace" required autofocus />
+
+    <span class="input-group-btn">
+      <button class="btn btn-primary"
+      ng-disabled="searchForm.$invalid">Search</button>
+    </span>
+
+  </div>
+</form>
+
+<div id="map"></div>
+
+<div class="col-md-8">
+  <form name="resForm" class="form-horizontal" novalidate
+  ng-submit="send()">
+  <div class="form-group">
+    <label for="resName" class="col-xs-2 control-label">Name</label>
+    <div class="col-xs-10">
+      <input name="resName" type="text" class="form-control"
+      ng-model="place.name" required />
     </div>
-    <div class="col-md-4">
-      <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
-      <h1><a class="website" href="#">Place Name</a></h1>
-      <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+  </div>
+
+  <div class="form-group">
+    <label for="resAddress" class="col-xs-2 control-label">Address</label>
+    <div class="col-xs-10">
+      <input name="resAddress" type="text" class="form-control"
+      ng-model="place.address" required />
     </div>
-    <div class="col-md-4">
-      <img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
-      <h1><a class="website" href="#">Place Name</a></h1>
-      <p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+  </div>
+
+  <div class="form-group">
+    <label for="resLat" class="col-xs-2 control-label">Latitude</label>
+    <div class="col-xs-10">
+      <input name="resLat" type="number" class="form-control"
+      ng-model="place.lat" required />
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="resLng" class="col-xs-2 control-label">Longitude</label>
+    <div class="col-xs-10">
+      <input name="resLng" type="number" class="form-control"
+      ng-model="place.lng" required />
     </div>
   </div>
 </div>
+
+<div class="col-md-4"
+  <div class="form-group">
+    <div class="col-xs-offset-2 col-xs-10">
+      <button class="btn btn-success"
+      ng-disabled="resForm.$invalid">Confirm</button>
+    </div>
+  </div>
+</div>
+</form>
+
+</div>
+
+<!-- End Google Map -->
+
+<!-- <div class="col-md-4">
+<img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
+<h1><a class="website" href="#">Place Name</a></h1>
+<p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+</div>
+<div class="col-md-4">
+<img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
+<h1><a class="website" href="#">Place Name</a></h1>
+<p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+</div>
+<div class="col-md-4">
+<img src="http://fpoimg.com/300x300?text=Advertisement" alt="placeholder" />
+<h1><a class="website" href="#">Place Name</a></h1>
+<p>Proin nec urna risus. Sed maximus sit amet nunc eget condimentum. Ut lobortis pretium neque, sit amet semper magna auctor vitae. Donec id rhoncus nibh. Integer fermentum, orci vel scelerisque accumsan, justo enim dapibus orci, vel bibendum ex eros vitae diam. Fusce eleifend quam in molestie aliquam.</p>
+</div> -->
 
 <div class="container">
   <!-- <h1>Modal Example</h1>
