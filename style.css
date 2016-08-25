@@ -424,6 +424,9 @@ display:none;
       height: 350px;
       display: inline-block;
     }
+    .bio_header, .bio_text {
+      text-shadow: 2px 2px black;
+    }
     .carousel-control.left {
       background-image: none;
     }
