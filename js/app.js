@@ -14,7 +14,7 @@
   {
     var options = {
       center: new google.maps.LatLng(38.9072,-77.0369),
-      zoom: 13,
+      zoom: 15,
       disableDefaultUI: true
     }
       this.init = function() {
