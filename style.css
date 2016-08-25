@@ -357,6 +357,9 @@ display:none;
   p {
     font-size: 20px;
   }
+  h5 {
+    color: 5;
+  }
   .row {
     box-sizing: border-box;
     margin-right: 0;
@@ -394,6 +397,7 @@ display:none;
   .black {
     background-color: black;
     color: white;
+    height: 700px;
   }
   .bio {
     width: 850px;
@@ -442,4 +446,11 @@ display:none;
     @media screen and (min-width: 768px)
     .carousel-indicators {
       bottom: -35px;
+    }
+    .input-group .form-control:first-child{
+      width: 80%;
+      float: right;
+    }
+    .form-control {
+      width: 100%
     }
