@@ -15,6 +15,7 @@ $(document).ready(function () {
 
   container.css("display", "none");
 
+
   //hide container div on page load
   //call the team modal function
   team.click(function () {
@@ -34,11 +35,15 @@ $(document).ready(function () {
       trigger.removeClass('is-open');
       trigger.addClass('is-closed');
       container.hide();
+      $('.col-md-6').css({"width": "60%", "text-align": "center"});
+      $('.col-md-5').css({"width": "30%", "text-align": "left"});
       isClosed = false;
     } else {
       overlay.show();
       trigger.removeClass('is-closed');
       trigger.addClass('is-open');
+      $('.col-md-6').css({"display": "block", "width": "100%", "text-align": "center"});
+      $('.col-md-5').css({"display": "block", "width": "100%", "text-align": "left"});
       isClosed = true;
     }
   }
